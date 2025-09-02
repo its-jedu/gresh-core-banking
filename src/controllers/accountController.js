@@ -24,3 +24,11 @@ exports.patch = async (req, res, next) => {
     res.json(updated);
   } catch (e) { next(e); }
 };
+
+exports.close = async (req, res, next) => {
+  try {
+    const closed = await svc.closeAccount(req.params.accountNumber);
+    if (!closed) return res.status(404).json({ error: 'Account not found' });
+    res.json(closed);
+  } catch (e) { next(e); }
+};

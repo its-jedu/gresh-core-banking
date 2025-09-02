@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const ctrl = require('../controllers/transactionController');
+const validate = require('../middlewares/validate');
+const { depositSchema, withdrawSchema, transferSchema } = require('../validators/transactionSchemas');
 
-router.post('/deposit', ctrl.deposit);                  // POST /api/transactions/deposit
-router.post('/withdraw', ctrl.withdraw);                // POST /api/transactions/withdraw
-router.post('/transfer', ctrl.transfer);                // POST /api/transactions/transfer
-router.get('/history/:accountNumber', ctrl.history);     // GET /api/transactions/history/:accountNumber
+router.post('/deposit', validate(depositSchema), ctrl.deposit);
+router.post('/withdraw', validate(withdrawSchema), ctrl.withdraw);
+router.post('/transfer', validate(transferSchema), ctrl.transfer);
+router.get('/history/:accountNumber', ctrl.history);
 
 module.exports = router;

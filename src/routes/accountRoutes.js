@@ -1,8 +1,11 @@
 const router = require('express').Router();
 const ctrl = require('../controllers/accountController');
+const validate = require('../middlewares/validate');
+const { createAccountSchema } = require('../validators/accountSchemas');
 
-router.post('/', ctrl.create);                          // POST /api/accounts
-router.get('/:accountNumber', ctrl.get);                // GET  /api/accounts/:accountNumber
-router.patch('/:accountNumber', ctrl.patch);            // PATCH /api/accounts/:accountNumber
+router.post('/', validate(createAccountSchema), ctrl.create);
+router.get('/:accountNumber', ctrl.get);
+router.patch('/:accountNumber', ctrl.patch);
+router.delete('/:accountNumber', ctrl.close);
 
 module.exports = router;

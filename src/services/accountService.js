@@ -31,4 +31,19 @@ async function updateAccount({ account_number, type, status }) {
   } finally { client.release(); }
 }
 
-module.exports = { createAccount, getAccount, updateAccount };
+async function closeAccount(account_number) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const { rows } = await client.query(
+      `UPDATE accounts SET status='closed' WHERE account_number=$1 RETURNING *`,
+      [account_number]
+    );
+    await client.query('COMMIT');
+    return rows[0] || null;
+  } catch (e) {
+    await client.query('ROLLBACK'); throw e;
+  } finally { client.release(); }
+}
+
+module.exports = { createAccount, getAccount, updateAccount, closeAccount };
