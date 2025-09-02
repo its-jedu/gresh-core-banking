@@ -123,4 +123,8 @@ async function transfer({ source_account, destination_account, amount, reference
   } finally { client.release(); }
 }
 
-module.exports = { deposit, withdraw, transfer };
+async function history(account_number, filters = {}) {
+  return txRepo.findByAccount(null, account_number, filters);
+}
+
+module.exports = { deposit, withdraw, transfer, history };

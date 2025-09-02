@@ -19,4 +19,35 @@ async function insert(client, tx) {
   return rows[0];
 }
 
-module.exports = { findByReference, insert };
+async function findByAccount(clientOrPool, accountNumber, { page = 1, limit = 10, startDate, endDate }) {
+  const db = clientOrPool || pool;
+
+  const offset = (page - 1) * limit;
+  const params = [accountNumber];
+  let where = `a.account_number=$1`;
+
+  if (startDate) {
+    params.push(startDate);
+    where += ` AND t.created_at >= $${params.length}`;
+  }
+  if (endDate) {
+    params.push(endDate);
+    where += ` AND t.created_at <= $${params.length}`;
+  }
+
+  params.push(limit, offset);
+
+  const { rows } = await db.query(
+    `SELECT t.*
+     FROM transactions t
+     JOIN accounts a ON t.account_id = a.id
+     WHERE ${where}
+     ORDER BY t.created_at DESC
+     LIMIT $${params.length - 1} OFFSET $${params.length}`,
+    params
+  );
+  return rows;
+}
+
+
+module.exports = { findByReference, insert, findByAccount };
