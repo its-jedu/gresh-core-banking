@@ -1,0 +1,97 @@
+{
+  "info": {
+    "name": "Gresh Core Banking API",
+    "_postman_id": "b6c3f6f2-7e2c-4b7c-9a31-abc123456789",
+    "description": "Postman collection for testing Gresh Core Banking backend APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "http://localhost:4000/health", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["health"] }
+      }
+    },
+    {
+      "name": "Create Account",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_id\": \"<uuid-from-customers>\",\n  \"type\": \"savings\"\n}"
+        },
+        "url": { "raw": "http://localhost:4000/api/accounts", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["api","accounts"] }
+      }
+    },
+    {
+      "name": "Get Account",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "http://localhost:4000/api/accounts/{{account_number}}", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["api","accounts","{{account_number}}"] }
+      }
+    },
+    {
+      "name": "Update Account",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"status\": \"active\"\n}" },
+        "url": { "raw": "http://localhost:4000/api/accounts/{{account_number}}", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["api","accounts","{{account_number}}"] }
+      }
+    },
+    {
+      "name": "Close Account",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": { "raw": "http://localhost:4000/api/accounts/{{account_number}}", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["api","accounts","{{account_number}}"] }
+      }
+    },
+    {
+      "name": "Deposit",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"account_number\": \"{{account_number}}\",\n  \"amount\": 1000,\n  \"reference\": \"ref-101\"\n}" },
+        "url": { "raw": "http://localhost:4000/api/transactions/deposit", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["api","transactions","deposit"] }
+      }
+    },
+    {
+      "name": "Withdraw",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"account_number\": \"{{account_number}}\",\n  \"amount\": 500,\n  \"reference\": \"ref-102\"\n}" },
+        "url": { "raw": "http://localhost:4000/api/transactions/withdraw", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["api","transactions","withdraw"] }
+      }
+    },
+    {
+      "name": "Transfer",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"source_account\": \"{{account_number}}\",\n  \"destination_account\": \"{{destination_account}}\",\n  \"amount\": 200,\n  \"reference\": \"ref-103\"\n}" },
+        "url": { "raw": "http://localhost:4000/api/transactions/transfer", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["api","transactions","transfer"] }
+      }
+    },
+    {
+      "name": "Transaction History",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "http://localhost:4000/api/transactions/history/{{account_number}}", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["api","transactions","history","{{account_number}}"], "query": [
+          { "key": "page", "value": "1" },
+          { "key": "limit", "value": "5" }
+        ] }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "account_number", "value": "3425058249" },
+    { "key": "destination_account", "value": "1000000002" }
+  ]
+}
