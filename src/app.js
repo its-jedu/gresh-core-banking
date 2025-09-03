@@ -22,8 +22,10 @@ const swaggerSpec = swaggerJsdoc({
     info: {
       title: 'Gresh Core Banking API',
       version: '1.0.0',
-      description: 'API documentation for core banking system'
+      description: 'API documentation for Gresh core banking system'
     },
+    components: { securitySchemes: { bearerAuth: { type: 'http', scheme: 'bearer'}}},
+    security: [{ bearerAuth: [] }],
     servers: [{ url: 'http://localhost:4000' }]
   },
   apis: ['./src/routes/*.js'] // will parse JSDoc comments from routes
