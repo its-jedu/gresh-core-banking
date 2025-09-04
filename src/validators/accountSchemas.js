@@ -6,3 +6,4 @@ exports.createAccountSchema = z.object({
     type: z.enum(['savings', 'current'])
   })
 });
+

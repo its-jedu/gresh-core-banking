@@ -80,3 +80,4 @@ describe('Accounts', () => {
     expect(r.body.status).toBe('closed');
   });
 });
+
