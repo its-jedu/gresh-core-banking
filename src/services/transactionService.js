@@ -2,7 +2,7 @@ const { pool } = require('../config/db');
 const accountRepo = require('../repositories/accountRepo');
 const txRepo = require('../repositories/transactionRepo');
 
-/** Helper: lock account row and return it */
+
 async function lockAccount(client, account_number) {
   const { rows } = await client.query(
     `SELECT * FROM accounts WHERE account_number=$1 FOR UPDATE`,

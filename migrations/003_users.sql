@@ -3,6 +3,6 @@ CREATE TABLE IF NOT EXISTS users (
   name        TEXT NOT NULL,
   email       TEXT UNIQUE NOT NULL,
   password    TEXT NOT NULL,
-  role        TEXT NOT NULL DEFAULT 'user', -- e.g. admin/user
+  role        TEXT NOT NULL DEFAULT 'user', -- e.g. admin/staff
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );

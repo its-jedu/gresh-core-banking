@@ -10,7 +10,7 @@ const pool = new Pool({
   ssl: false,
 });
 
-// Quick sanity log (won't print the password)
+// Quick Log
 console.log('DB cfg →', {
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
